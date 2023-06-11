@@ -6,14 +6,14 @@
 /*   By: ktomoya <ktomoya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 18:51:04 by ktomoya           #+#    #+#             */
-/*   Updated: 2023/06/11 18:51:29 by ktomoya          ###   ########.fr       */
+/*   Updated: 2023/06/11 19:35:47 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-ssize_t	ft_putchar(const char c)
+ssize_t	ft_putchar(int c)
 {
-	write(1, c, 1);
+	write(1, &c, 1);
 	return (1);
 }
