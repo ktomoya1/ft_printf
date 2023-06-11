@@ -44,8 +44,13 @@ SRCS_FILES = ft_isalpha.c \
 	ft_lstclear.c \
 	ft_lstiter.c \
 	ft_lstmap.c
+
+SRCS_P = ft_putchar.c \
+	ft_putstr.c \
+	ft_printf.c 
 	
 SRCS = ${addprefix ${SRCS_DIR}, ${SRCS_FILES}}
+SRCS += ${SRCS_P}
 OBJS = ${SRCS:.c=.o}
 
 INCDIR = ./includes
