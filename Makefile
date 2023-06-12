@@ -45,8 +45,8 @@ SRCS_FILES = ft_isalpha.c \
 	ft_lstiter.c \
 	ft_lstmap.c
 
-SRCS_P = ft_putchar.c \
-	ft_putstr.c \
+SRCS_P = ft_putchar_fd_c.c \
+	ft_putstr_fd_c.c \
 	ft_printf.c 
 	
 SRCS = ${addprefix ${SRCS_DIR}, ${SRCS_FILES}}
