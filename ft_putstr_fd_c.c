@@ -6,7 +6,7 @@
 /*   By: ktomoya <ktomoya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 19:02:48 by ktomoya           #+#    #+#             */
-/*   Updated: 2023/06/12 15:48:23 by ktomoya          ###   ########.fr       */
+/*   Updated: 2023/06/13 13:23:32 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 ssize_t	ft_putstr_fd_c(char *s, int fd)
 {
+	ssize_t	count;
+
 	if (s == NULL)
-		return ;
-	write(fd, s, ft_strlen(s));
-	return (ft_strlen(s));
+		count = write(fd, "(null)", 6);
+	else
+		count = write(fd, s, ft_strlen(s));
+	return (count);
 }
