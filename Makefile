@@ -31,10 +31,6 @@ SRCS_FILES = ft_isalpha.c \
 	ft_itoa.c \
 	ft_strmapi.c \
 	ft_striteri.c \
-	ft_putchar_fd.c \
-	ft_putstr_fd.c \
-	ft_putendl_fd.c \
-	ft_putnbr_fd.c \
 	ft_lstnew.c \
 	ft_lstadd_front.c \
 	ft_lstsize.c \
@@ -45,8 +41,9 @@ SRCS_FILES = ft_isalpha.c \
 	ft_lstiter.c \
 	ft_lstmap.c
 
-SRCS_P = ft_putchar_fd_c.c \
-	ft_putstr_fd_c.c \
+SRCS_P = ft_putchar_fd.c \
+	ft_putstr_fd.c \
+	ft_putnbr_base_set.c \
 	ft_printf.c 
 	
 SRCS = ${addprefix ${SRCS_DIR}, ${SRCS_FILES}}

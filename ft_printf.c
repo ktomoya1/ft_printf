@@ -6,73 +6,77 @@
 /*   By: ktomoya <ktomoya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 14:06:08 by ktomoya           #+#    #+#             */
-/*   Updated: 2023/06/11 21:27:31 by ktomoya          ###   ########.fr       */
+/*   Updated: 2023/06/13 21:32:53 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdarg.h>
 
-static int	check_flag(const char *format, va_list args, ssize_t count)
+static ssize_t	checktype(const char *type, va_list args, ssize_t chars, int fd)
 {
-	if (*format == 'c')
-		count += ft_putchar(va_arg(args, int));
-	else if (*format == 's')
-		count += ft_putstr(va_arg(args, char*));
-	// else if (*format == 'p')
-	// 	count += 1;
-	// else if (*format == 'd')
-	// 	count += 1;
-	// else if (*format == 'i')
-	// 	count += 1;
-	// else if (*format == 'u')
-	// 	count += 1;
-	// else if (*format == 'x')
-	// 	count += 1;
-	// else if (*format == 'X')
-	// 	count += 1;
-	// else if (*format == '%')
-	// 	count += 1;
+	if (*type == 'c')
+		chars = ft_putchar_fd(va_arg(args, int), fd);
+	else if (*type == 's')
+		chars = ft_putstr_fd(va_arg(args, char *), fd);
+	else if (*type == 'p')
+	{
+		chars = ft_putstr_fd("0x", fd);
+		chars += put_address_fd(va_arg(args, uintptr_t),
+				"0123456789abcdef", fd);
+	}
+	else if (*type == 'd' || *type == 'i')
+		chars = ft_putint_fd(va_arg(args, int), "0123456789", fd);
+	else if (*type == 'u')
+		chars = put_address_fd(va_arg(args, unsigned int), "0123456789", fd);
+	else if (*type == 'x')
+		chars = put_address_fd(va_arg(args, unsigned int),
+				"0123456789abcdef", fd);
+	else if (*type == 'X')
+		chars = put_address_fd(va_arg(args, unsigned int),
+				"0123456789ABCDEF", fd);
+	else if (*type == '%')
+		chars = ft_putchar_fd('%', fd);
 	else
-		count = ft_putchar(*format);
-	return (count);
+		chars = ft_putchar_fd(*type, fd);
+	return (chars);
 }
 
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
-	ssize_t	count;
+	ssize_t	chars;
 
 	va_start(args, format);
-	count = 0;
+	chars = 0;
 	while (*format != '\0')
 	{
 		if (*format == '%')
 		{
 			format++;
 			if (*format != '\0')
-				count = check_flag(format, args, count);
+				chars += checktype(format, args, chars, STDOUT_FILENO);
 		}
 		else
-		{
-			ft_putchar(*format);
-			count++;
-		}
+			chars += ft_putchar_fd(*format, STDOUT_FILENO);
 		format++;
 	}
 	va_end(args);
-	return ((int)count);
+	return ((int)chars);
 }
 
 // int	main(void)
 // {
-// 	int	ft_count;
-// 	int	count;
+// 	uintptr_t 	num;
+// 	ssize_t		count1;
+// 	ssize_t		count2;
 
-// 	ft_count = ft_printf("%c%c%c", '\0', '1', 1);
+// 	num = 1;
+// 	// ft_printf(" NULL %s NULL \n", NULL);
+// 	// printf(" NULL %s NULL \n", NULL);
+// 	count1 = ft_printf(" %p ", &num);
 // 	printf("\n");
-// 	count = printf("%c%c%c", '\0', '1', 1);
+// 	count2 = printf(" %p ", &num);
 // 	printf("\n");
-// 	printf("ft_count:%d\n", ft_count);
-// 	printf("count   :%d\n", count);
+// 	printf("ft_count:%lu\n", count1);
+// 	printf("count   :%lu\n", count2);
 // }
