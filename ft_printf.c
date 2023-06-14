@@ -6,7 +6,7 @@
 /*   By: ktomoya <ktomoya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 14:06:08 by ktomoya           #+#    #+#             */
-/*   Updated: 2023/06/14 17:08:30 by ktomoya          ###   ########.fr       */
+/*   Updated: 2023/06/14 18:13:08 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,26 +62,3 @@ int	ft_printf(const char *format, ...)
 	va_end(args);
 	return ((int)chars);
 }
-
-// int	main(void)
-// {
-// 	// uintptr_t 	num;
-// 	int		count1;
-// 	int		count2;
-
-// 	// num = 1;
-// 	// ft_printf(" NULL %s NULL \n", NULL);
-// 	// printf(" NULL %s NULL \n", NULL);
-// 	// count1 = ft_printf(" %p ", &num);
-// 	// printf("\n");
-// 	// count2 = printf(" %p ", &num);
-// 	// printf("\n");
-// 	// printf("ft_count:%lu\n", count1);
-// 	// printf("count   :%lu\n", count2);
-// 	count1 = ft_printf("aaaa%q ", "aaa");
-// 	printf("\n");
-// 	count2 = printf("aaaa%q ", "aaa")
-// 	printf("\n");
-// 	printf("ft_count:%d\n", count1);
-// 	printf("count   :%d\n", count2);
-// }
