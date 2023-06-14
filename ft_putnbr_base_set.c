@@ -6,7 +6,7 @@
 /*   By: ktomoya <ktomoya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 20:09:58 by ktomoya           #+#    #+#             */
-/*   Updated: 2023/06/13 21:14:13 by ktomoya          ###   ########.fr       */
+/*   Updated: 2023/06/14 17:09:29 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	base_is_validate(char *base)
 	return (1);
 }
 
-ssize_t	put_address_fd(uintptr_t hexnbr, char *base, int fd)
+ssize_t	put_ptr_fd(uintptr_t hexnbr, char *base, int fd)
 {
 	uintptr_t	base_len;
 	ssize_t		chars;
@@ -49,12 +49,29 @@ ssize_t	put_address_fd(uintptr_t hexnbr, char *base, int fd)
 	if (!base_is_validate(base))
 		return (0);
 	if (hexnbr >= base_len)
-		chars = put_address_fd(hexnbr / base_len, base, fd);
+		chars = put_ptr_fd(hexnbr / base_len, base, fd);
 	chars += write(fd, &base[hexnbr % base_len], 1);
 	return (chars);
 }
 
-ssize_t	ft_putint_fd(int nbr, char *base, int fd)
+ssize_t	put_uint_fd(unsigned int nbr, char *base, int fd)
+{
+	uintptr_t	base_len;
+	ssize_t		chars;
+
+	chars = 0;
+	if (base == NULL)
+		return (0);
+	base_len = ft_strlen(base);
+	if (!base_is_validate(base))
+		return (0);
+	if (nbr >= base_len)
+		chars = put_uint_fd(nbr / base_len, base, fd);
+	chars += write(fd, &base[nbr % base_len], 1);
+	return (chars);
+}
+
+ssize_t	put_int_fd(int nbr, char *base, int fd)
 {
 	ssize_t	base_len;
 	ssize_t	chars;
@@ -76,7 +93,7 @@ ssize_t	ft_putint_fd(int nbr, char *base, int fd)
 		nbr *= -1;
 	}
 	if (nbr >= base_len)
-		chars += ft_putint_fd(nbr / base_len, base, fd);
+		chars += put_int_fd(nbr / base_len, base, fd);
 	chars += write(fd, &base[nbr % base_len], 1);
 	return (chars);
 }
