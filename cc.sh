@@ -1,1 +1,0 @@
-cc -Wall -Wextra -Werror ft_printf.c -I includes ft_putchar.c ft_putstr.c -g
