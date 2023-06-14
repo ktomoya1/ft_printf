@@ -6,7 +6,7 @@
 /*   By: ktomoya <ktomoya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 18:51:04 by ktomoya           #+#    #+#             */
-/*   Updated: 2023/06/13 17:05:36 by ktomoya          ###   ########.fr       */
+/*   Updated: 2023/06/14 16:37:35 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,5 @@
 
 ssize_t	ft_putchar_fd(int c, int fd)
 {
-	write(fd, &c, 1);
-	return (1);
+	return (write(fd, &c, 1));
 }
