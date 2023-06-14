@@ -6,38 +6,35 @@
 /*   By: ktomoya <ktomoya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 14:06:08 by ktomoya           #+#    #+#             */
-/*   Updated: 2023/06/13 21:32:53 by ktomoya          ###   ########.fr       */
+/*   Updated: 2023/06/14 17:08:30 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static ssize_t	checktype(const char *type, va_list args, ssize_t chars, int fd)
+static ssize_t	checkflag(const char *flag, va_list args, ssize_t chars, int fd)
 {
-	if (*type == 'c')
+	if (*flag == 'c')
 		chars = ft_putchar_fd(va_arg(args, int), fd);
-	else if (*type == 's')
+	else if (*flag == 's')
 		chars = ft_putstr_fd(va_arg(args, char *), fd);
-	else if (*type == 'p')
+	else if (*flag == 'p')
 	{
 		chars = ft_putstr_fd("0x", fd);
-		chars += put_address_fd(va_arg(args, uintptr_t),
-				"0123456789abcdef", fd);
+		chars += put_ptr_fd(va_arg(args, uintptr_t), "0123456789abcdef", fd);
 	}
-	else if (*type == 'd' || *type == 'i')
-		chars = ft_putint_fd(va_arg(args, int), "0123456789", fd);
-	else if (*type == 'u')
-		chars = put_address_fd(va_arg(args, unsigned int), "0123456789", fd);
-	else if (*type == 'x')
-		chars = put_address_fd(va_arg(args, unsigned int),
-				"0123456789abcdef", fd);
-	else if (*type == 'X')
-		chars = put_address_fd(va_arg(args, unsigned int),
-				"0123456789ABCDEF", fd);
-	else if (*type == '%')
+	else if (*flag == 'd' || *flag == 'i')
+		chars = put_int_fd(va_arg(args, int), "0123456789", fd);
+	else if (*flag == 'u')
+		chars = put_uint_fd(va_arg(args, unsigned int), "0123456789", fd);
+	else if (*flag == 'x')
+		chars = put_uint_fd(va_arg(args, unsigned int), "0123456789abcdef", fd);
+	else if (*flag == 'X')
+		chars = put_uint_fd(va_arg(args, unsigned int), "0123456789ABCDEF", fd);
+	else if (*flag == '%')
 		chars = ft_putchar_fd('%', fd);
 	else
-		chars = ft_putchar_fd(*type, fd);
+		chars = ft_putchar_fd(*flag, fd);
 	return (chars);
 }
 
@@ -53,8 +50,10 @@ int	ft_printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
-			if (*format != '\0')
-				chars += checktype(format, args, chars, STDOUT_FILENO);
+			if (*format != '\0' && ft_strchr("cspdiuxX%%", *format) != NULL)
+				chars += checkflag(format, args, chars, STDOUT_FILENO);
+			else
+				return (chars);
 		}
 		else
 			chars += ft_putchar_fd(*format, STDOUT_FILENO);
@@ -66,17 +65,23 @@ int	ft_printf(const char *format, ...)
 
 // int	main(void)
 // {
-// 	uintptr_t 	num;
-// 	ssize_t		count1;
-// 	ssize_t		count2;
+// 	// uintptr_t 	num;
+// 	int		count1;
+// 	int		count2;
 
-// 	num = 1;
+// 	// num = 1;
 // 	// ft_printf(" NULL %s NULL \n", NULL);
 // 	// printf(" NULL %s NULL \n", NULL);
-// 	count1 = ft_printf(" %p ", &num);
+// 	// count1 = ft_printf(" %p ", &num);
+// 	// printf("\n");
+// 	// count2 = printf(" %p ", &num);
+// 	// printf("\n");
+// 	// printf("ft_count:%lu\n", count1);
+// 	// printf("count   :%lu\n", count2);
+// 	count1 = ft_printf("aaaa%q ", "aaa");
 // 	printf("\n");
-// 	count2 = printf(" %p ", &num);
+// 	count2 = printf("aaaa%q ", "aaa")
 // 	printf("\n");
-// 	printf("ft_count:%lu\n", count1);
-// 	printf("count   :%lu\n", count2);
+// 	printf("ft_count:%d\n", count1);
+// 	printf("count   :%d\n", count2);
 // }
